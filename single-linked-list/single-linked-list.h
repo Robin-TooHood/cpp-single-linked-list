@@ -18,12 +18,12 @@ class SingleLinkedList
         Type value;
         Node *next_node = nullptr;
     };
-    
+
     template <typename ValueType>
     class BasicIterator
     {
         friend class SingleLinkedList;
-        
+
         explicit BasicIterator(Node *node)
         {
             node_ = node;
@@ -31,13 +31,13 @@ class SingleLinkedList
 
     public:
         using iterator_category = std::forward_iterator_tag;
-        
+
         using value_type = Type;
-        
+
         using difference_type = std::ptrdiff_t;
-        
+
         using pointer = ValueType *;
-        
+
         using reference = ValueType &;
 
         BasicIterator() = default;
@@ -185,7 +185,7 @@ public:
     using const_reference = const value_type &;
 
     using Iterator = BasicIterator<Type>;
-    
+
     using ConstIterator = BasicIterator<const Type>;
 
     [[nodiscard]] Iterator begin() noexcept
