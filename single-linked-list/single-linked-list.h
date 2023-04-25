@@ -79,6 +79,7 @@ class SingleLinkedList
 
         BasicIterator operator++(int) noexcept
         {
+            assert(this->node_ != nullptr);
             auto value(*this);
             ++(*this);
             return value;
@@ -86,11 +87,13 @@ class SingleLinkedList
 
         [[nodiscard]] reference operator*() const noexcept
         {
+            assert(this->node_ != nullptr);
             return node_->value;
         }
 
         [[nodiscard]] pointer operator->() const noexcept
         {
+            assert(this->node_ != nullptr);
             return &(node_->value);
         }
 
@@ -109,32 +112,6 @@ public:
         Clear();
     }
 
-    template <class InputIt>
-    void Assign(InputIt first, InputIt last)
-    {
-        head_.next_node = nullptr;
-        size_ = 0;
-        Node **temp = &head_.next_node;
-        for (auto iter = first; iter != last; ++iter)
-        {
-            ++size_;
-            *temp = new Node(*iter, nullptr);
-            temp = &((*temp)->next_node);
-        }
-    }
-
-    void Assign(std::initializer_list<Type> ilist)
-    {
-        head_.next_node = nullptr;
-        size_ = ilist.size();
-        Node **temp = &head_.next_node;
-        for (auto value : ilist)
-        {
-            *temp = new Node(value, nullptr);
-            temp = &((*temp)->next_node);
-        }
-    }
-
     SingleLinkedList(const SingleLinkedList &other)
     {
         Assign(other.begin(), other.end());
@@ -142,7 +119,7 @@ public:
 
     SingleLinkedList(std::initializer_list<Type> values)
     {
-        Assign(values);
+        Assign(values.begin(), values.end());
     }
 
     SingleLinkedList &operator=(const SingleLinkedList &rhs)
@@ -275,6 +252,20 @@ public:
 private:
     Node head_;
     size_t size_;
+
+    template <class InputIt>
+    void Assign(InputIt first, InputIt last)
+    {
+        head_.next_node = nullptr;
+        size_ = 0;
+        Node **temp = &head_.next_node;
+        for (auto iter = first; iter != last; ++iter)
+        {
+            ++size_;
+            *temp = new Node(*iter, nullptr);
+            temp = &((*temp)->next_node);
+        }
+    }
 };
 
 template <typename Type>
