@@ -1,2 +1,2 @@
 # cpp-single-linked-list
-Финальный проект: односвязный список
+Final student project: single linked list
